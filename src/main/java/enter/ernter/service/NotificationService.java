@@ -9,7 +9,6 @@ import enter.ernter.repositories.UserRepository;
 
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
-import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -23,7 +22,6 @@ import java.time.LocalDateTime;
 import java.util.Base64;
 import java.util.Optional;
 
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 @Service

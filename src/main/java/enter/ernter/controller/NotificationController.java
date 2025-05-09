@@ -1,13 +1,10 @@
 package enter.ernter.controller;
 
-import java.io.IOException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,17 +12,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import enter.ernter.dto.NotificationRequest;
 import enter.ernter.entities.Notification;
-import enter.ernter.entities.User;
 import enter.ernter.handler.CustomWebSocketHandler;
+import enter.ernter.repositories.UserRepository;
 import enter.ernter.service.NotificationService;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
@@ -43,6 +36,9 @@ public class NotificationController {
     @Autowired
     NotificationService notificationService;
 
+    @Autowired
+    private UserRepository userRepository;
+
     @PostMapping
     public ResponseEntity<String> create(@RequestBody NotificationRequest request) {
         try {
@@ -58,13 +54,17 @@ public class NotificationController {
     }
 
     @GetMapping("/get")
-    public ResponseEntity<Page<Notification>> getNotifications(
+    public ResponseEntity<?>  getNotifications(
             @RequestParam int userId,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "2") int size,
             @RequestParam(defaultValue = "createdAt") String sortBy,
             @RequestParam(defaultValue = "desc") String direction) {
 
+        if (!userRepository.existsById(userId)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                    .body("Access Denied: userId " + userId + " không tồn tại.");
+        }
         Sort sort = direction.equalsIgnoreCase("asc") ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
         Pageable pageable = PageRequest.of(page, size, sort);
 
