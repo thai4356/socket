@@ -54,17 +54,15 @@ public class NotificationService {
             notification.setUpdatedAt(LocalDateTime.now());
 
             notificationRepository.save(notification);
-            // Gửi message xác nhận cho FE
-            // session.sendMessage(new TextMessage("✅ Connected to site " + siteId + " as user " + userId));
+   
         } else {
-            // Nếu user sai thì gửi lỗi và đóng socket
-            // session.sendMessage(new TextMessage("❌ User not found or site mismatch."));
-            // session.close(); // 🔥 Ngắt kết nối socket
+   
+            session.close(); //  Ngắt kết nối socket
         }
     }
 
     public void createNotificationFromPayload(NotificationRequest request) throws Exception {
-        Optional<User> userOpt = userRepository.findById(request.getUserId());
+        Optional<User> userOpt = userRepository.findByUserId(request.getUserId());
         if (userOpt.isEmpty()) {
             throw new RuntimeException("User not found with ID " + request.getUserId());
         }

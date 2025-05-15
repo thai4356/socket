@@ -7,5 +7,5 @@ public class NotificationRequest {
     private String status;
     private String privateKey;
     private MessageDTO message;
-    private int userId;
+    private String userId;
 }
