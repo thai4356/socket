@@ -26,4 +26,6 @@ public class NotificationMessage {
     public void setTitle(String title) {
         this.title = title;
     }
+
+    
 }

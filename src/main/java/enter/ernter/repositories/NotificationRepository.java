@@ -10,6 +10,8 @@ import java.util.List;
 
 @Repository
 public interface NotificationRepository extends JpaRepository<Notification, Integer> {
-    List<Notification> findByUserId(Integer userId);
-    Page<Notification> findAllByUserId(int userId, Pageable pageable);
+    List<Notification> findByUser_UserId(String userId);
+
+    Page<Notification> findAllByUser_UserId(String userId, Pageable pageable);
+
 }

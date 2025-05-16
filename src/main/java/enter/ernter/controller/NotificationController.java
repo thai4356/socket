@@ -54,22 +54,27 @@ public class NotificationController {
     }
 
     @GetMapping("/get")
-    public ResponseEntity<?>  getNotifications(
-            @RequestParam int userId,
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "2") int size,
-            @RequestParam(defaultValue = "createdAt") String sortBy,
-            @RequestParam(defaultValue = "desc") String direction) {
+public ResponseEntity<?> getNotifications(
+        @RequestParam String userId,
+        @RequestParam(defaultValue = "0") int page,
+        @RequestParam(defaultValue = "2") int size,
+        @RequestParam(defaultValue = "createdAt") String sortBy,
+        @RequestParam(defaultValue = "desc") String direction) {
 
-        if (!userRepository.existsById(userId)) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN)
-                    .body("Access Denied: userId " + userId + " không tồn tại.");
-        }
-        Sort sort = direction.equalsIgnoreCase("asc") ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
-        Pageable pageable = PageRequest.of(page, size, sort);
-
-        Page<Notification> notifications = notificationService.getAllNotifications(userId, pageable);
-        return ResponseEntity.ok(notifications);
+    if (!userRepository.existsByUserId(userId)) {
+        return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                .body("Access Denied: userId " + userId + " không tồn tại.");
     }
+
+    Sort sort = direction.equalsIgnoreCase("asc")
+            ? Sort.by(sortBy).ascending()
+            : Sort.by(sortBy).descending();
+
+    Pageable pageable = PageRequest.of(page, size, sort);
+
+    Page<Notification> notifications = notificationService.getAllNotifications(userId, pageable);
+    return ResponseEntity.ok(notifications);
+}
+
 
 }

@@ -27,7 +27,7 @@ public class Notification {
     private int id;
 
     @ManyToOne
-    @JoinColumn(name = "userId", insertable = true, updatable = true)
+    @JoinColumn(name = "userId", referencedColumnName = "userId", insertable = true, updatable = true)
     private User user;
 
     private String status;

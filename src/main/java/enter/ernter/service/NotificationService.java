@@ -40,9 +40,7 @@ public class NotificationService {
 
         if (userOpt.isPresent()) {
             User user = userOpt.get();
-            NotificationMessage msg = new NotificationMessage(
-                    "Thông báo mới",
-                    "người dùng đang online");
+            NotificationMessage msg = new NotificationMessage("Thông báo mới","người dùng đang online");
             Notification notification = new Notification();
             ObjectMapper mapper = new ObjectMapper();
             String jsonString = mapper.writeValueAsString(msg);
@@ -96,8 +94,8 @@ public class NotificationService {
         notificationRepository.save(notification);
     }
 
-    public Page<Notification> getAllNotifications(int userId,Pageable pageable) {
-         return notificationRepository.findAllByUserId(userId, pageable);
-    }
+    public Page<Notification> getAllNotifications(String userId, Pageable pageable) {
+    return notificationRepository.findAllByUser_UserId(userId, pageable);
+}
 
 }
