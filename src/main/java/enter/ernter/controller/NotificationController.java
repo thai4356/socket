@@ -61,6 +61,9 @@ public ResponseEntity<?> getNotifications(
         @RequestParam(defaultValue = "createdAt") String sortBy,
         @RequestParam(defaultValue = "desc") String direction) {
 
+
+        userId = userId.replaceAll("^\"|\"$", "").trim();
+        
     if (!userRepository.existsByUserId(userId)) {
         return ResponseEntity.status(HttpStatus.FORBIDDEN)
                 .body("Access Denied: userId " + userId + " không tồn tại.");
