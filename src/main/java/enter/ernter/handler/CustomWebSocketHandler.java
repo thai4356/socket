@@ -33,7 +33,8 @@ public class CustomWebSocketHandler extends TextWebSocketHandler {
         JsonNode node = objectMapper.readTree(message.getPayload());
 
         String userId = node.get("userId").asText();
-        int siteId = node.get("siteId").asInt();
+        String siteId = node.get("siteId").asText(); // Trích xuất luôn chuỗi
+
 
         // Gọi service để xử lý logic validate + lưu DB
         notificationService.handleUserConnection(userId, siteId, session);
