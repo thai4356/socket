@@ -35,8 +35,8 @@ public class NotificationService {
         this.notificationRepository = notificationRepository;
     }
 
-    public void handleUserConnection(String userId, int siteId, WebSocketSession session) throws IOException {
-        Optional<User> userOpt = userRepository.findByUserIdAndSiteId(userId, siteId);
+    public void handleUserConnection(String userId, String siteId, WebSocketSession session) throws IOException {
+        Optional<User> userOpt = userRepository.findByUserIdAndSite_SiteID(userId, siteId);
 
         if (userOpt.isPresent()) {
             User user = userOpt.get();
