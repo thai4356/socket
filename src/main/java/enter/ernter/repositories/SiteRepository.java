@@ -10,4 +10,6 @@ import enter.ernter.entities.Site;
 @Repository
 public interface SiteRepository extends JpaRepository<Site, Integer> {
     Optional<Site> findByDomain(String domain);
+
+    Optional<Site> findBySiteID(String siteID);
 }

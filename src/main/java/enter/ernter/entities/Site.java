@@ -19,6 +19,7 @@ public class Site {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    private String siteID;
     private String domain;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     LocalDateTime createdAt;

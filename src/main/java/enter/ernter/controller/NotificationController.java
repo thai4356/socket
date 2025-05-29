@@ -65,14 +65,14 @@ public class NotificationController {
     public ResponseEntity<?> getNotifications(
             @RequestParam String userId,
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam int site,
+            @RequestParam String site,
             @RequestParam(defaultValue = "2") int size,
             @RequestParam(defaultValue = "createdAt") String sortBy,
             @RequestParam(defaultValue = "desc") String direction) {
 
         userId = userId.replaceAll("^\"|\"$", "").trim();
 
-        Site siteEntity = siteRepository.findById(site)
+        Site siteEntity = siteRepository.findBySiteID(site)
                 .orElse(null);
         if (siteEntity == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
